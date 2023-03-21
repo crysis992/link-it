@@ -6,7 +6,7 @@ function Features() {
             <div className='max-w-xl mx-auto mb-24'>
                 <h1 className='text-center font-bold text-2xl mb-2'>Fast & Simple URL shortener</h1>
                 <p className='text-center'>
-                    Link.es allows to reduce long links from any site on the Internet.
+                    This site allows to reduce long links from any site on the Internet.
                     Just paste the long URL and click the &quot;Short this link&quot; button.
                     Coyp the generated short URL and share it with your friends.
                 </p>

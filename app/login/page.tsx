@@ -10,7 +10,7 @@ function LoginPage() {
     const { data: session, status } = useSession();
     const router = useRouter();
 
-    const [email, setEmail] = useState("crysis@gmail.com");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
