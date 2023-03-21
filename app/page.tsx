@@ -1,6 +1,7 @@
 import Features from "@/components/Features";
 import HeroSection from "@/components/HeroSection";
 import LinkShortener from "@/components/LinkShortener";
+import Pricing from "@/components/Pricing";
 
 
 export default function Home() {
@@ -11,6 +12,7 @@ export default function Home() {
       <HeroSection />
       <LinkShortener />
       <Features />
+      <Pricing />
     </main>
   )
 }
