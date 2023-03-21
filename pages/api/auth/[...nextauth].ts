@@ -71,7 +71,7 @@ export default NextAuth({
         },
         async session({ session, token }) {
             const dbUser = await prisma.user.findFirst({
-                where: { id: session.user.id },
+                where: { id: token.id! },
             });
             if (!dbUser) return session;
 
