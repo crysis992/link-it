@@ -1,51 +1,45 @@
+import { getServerSession } from "next-auth";
 import GreetingBox from "./components/greeting"
 import prisma from "@/libs/prisma/index"
+import { headers } from 'next/headers';
+import { getToken } from "next-auth/jwt";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
 export const revalidate = 0;
 
-async function getAllLinks() {
-    return await prisma.target.findMany();
-}
-
-async function getUsers() {
-    return await prisma.user.findMany();
+async function getAllLinks(user: string) {
+    return await prisma.target.findMany({ where: { userId: user } });
 }
 
 async function UserDashboard() {
-
-    const data = await getAllLinks();
-    const user = await getUsers();
+    const session = await getServerSession(authOptions);
+    const data = await getAllLinks(session!.user.id);
 
     return (
         <main className="container mx-auto">
             <GreetingBox />
-            <h2 className="text-bold text-2xl mb-3">[Work in Progress]</h2>
-            <p className="my-4">Adminübersicht - Alle erstellen Links</p>
-            {data.map((link) => <div key={link.id}>
-                <div className="flex gap-5">
-                    <div><span className="font-semibold text-gray-900">ID: </span>{link.id}</div>
-                    <div><span className="font-semibold text-gray-900">Erstellt am: </span>{link.createdAt.toDateString()}</div>
-                    <div><span className="font-semibold text-gray-900">Ziel: </span>{link.target}</div>
-                    <div><span className="font-semibold text-gray-900">IP: </span> <small> (wird noch nicht gespeichert)</small></div>
-                </div>
-            </div>
-            )}
+            <p className="mt-4">Your link list</p>
 
-            <hr className="my-10" />
-
-            {user.map((ui) => <div key={ui.id}>
-                <div className="flex gap-5">
-                    <div><span className="font-semibold text-gray-900">ID: </span>{ui.name}</div>
-                    <div><span className="font-semibold text-gray-900">Erstellt am: </span>{ui.createdAt.toDateString()}</div>
-                    <div><span className="font-semibold text-gray-900">Mail: </span>{ui.email}</div>
-                    <div><span className="font-semibold text-gray-900">Passwort: </span>{ui.hashedPassword}</div>
-                    <div><span className="font-semibold text-gray-900">Username: </span>{ui.username}</div>
-                    <div><span className="font-semibold text-gray-900">IP: </span> <small> (wird noch nicht gespeichert)</small></div>
-                </div>
-            </div>
-            )}
-
-
+            <table className="min-w-full text-left text-sm font-light my-5">
+                <thead className="border-b font-medium border-neutral-500">
+                    <tr>
+                        <th scope="col" className="px-6 py-4">Short</th>
+                        <th scope="col" className="px-6 py-4">Destination</th>
+                        <th scope="col" className="px-6 py-4">Visits</th>
+                        <th scope="col" className="px-6 py-4">Manage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {data.map((link) => (
+                        <tr key={link.id} className="border-b transition duration-200 ease-in-out hover:bg-neutral-100">
+                            <td className="whitespace-nowrap px-6 py-4 font-medium">https://link.crytec.net/l/{link.shortId}</td>
+                            <td className="whitespace-nowrap px-6 py-4 font-medium">{link.target}</td>
+                            <td className="whitespace-nowrap px-6 py-4 font-medium">{link.visits}</td>
+                            <td className="whitespace-nowrap px-6 py-4"><button className="bg-blue-400 hover:bg-blue-500">Manage</button></td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </main>
     )
 }

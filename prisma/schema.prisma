@@ -16,6 +16,8 @@ model Target {
   shortId   String   @unique
   target    String
   visits    Int      @default(0)
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String?  @db.ObjectId
 }
 
 model User {
@@ -34,4 +36,5 @@ model User {
   updatedAt       DateTime  @updatedAt
   followingIds    String[]  @db.ObjectId
   hasNotification Boolean?
+  targets         Target[]
 }

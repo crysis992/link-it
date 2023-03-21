@@ -10,9 +10,7 @@ function GreetingBox() {
     }
     return (
         <div className="text-xl">
-            <p>Willkommen Admin, {session?.user.name}</p>
-            {/* <p className="text-red-600">Dein Status: {session?.user.role}</p> */}
-
+            <p>Welcome, {session?.user.name}</p>
         </div>
     )
 }

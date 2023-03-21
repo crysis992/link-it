@@ -7,8 +7,7 @@ function isUserRole(role: string | undefined | unknown): role is "user" | "admin
 
 export default withAuth(
     function middleware(req) {
-        console.log('Called middleware');
-        console.log(req.nextauth.token?.role)
+        console.log('Called middleware. Use Role is:', req.nextauth.token?.role);
         if (req.nextUrl.pathname.startsWith("/admin") && req.nextauth.token?.role !== "admin")
             return NextResponse.rewrite(
                 new URL("/login", req.url)
