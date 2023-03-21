@@ -1,4 +1,4 @@
-import NextAuth, { DefaultSession, DefaultUser } from "next-auth"
+import NextAuth, { DefaultSession, DefaultUser, NextAuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import prisma from "@/libs/prisma/index"
@@ -16,7 +16,7 @@ declare module "next-auth" {
     }
 }
 
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(prisma),
     providers: [
         CredentialsProvider({
@@ -62,35 +62,26 @@ export default NextAuth({
     debug: true,
     session: {
         strategy: 'jwt',
+        maxAge: 60 * 60 * 24 * 7,
+    },
+    jwt: {
+        maxAge: 60 * 60 * 24 * 7,
     },
     callbacks: {
-        async signIn({ user, account, profile, email, credentials }) {
-            console.log('User is logging in..')
-            console.log(user)
-            return true
-        },
         async session({ session, token }) {
-            const dbUser = await prisma.user.findFirst({
-                where: { id: token.id! },
-            });
-            if (!dbUser) return session;
-
-            session.user = {
-                id: dbUser.id,
-                name: dbUser.username,
-                image: dbUser.profileImage,
-                email: dbUser.email,
-                role: dbUser.role,
-            }
-
-            return session
+            console.log('Called session callback')
+            session.user = token as any;
+            return session;
         },
         async jwt({ token, user }) {
+            console.log('Called JWT callback')
             if (user) {
-                token.id = user!.id;
+                token.id = user.id;
                 token.role = user.role;
             }
             return token
         }
     }
-})
+}
+
+export default NextAuth(authOptions)
