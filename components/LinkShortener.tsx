@@ -79,7 +79,7 @@ function LinkShortener() {
             {url.length > 0 &&
                 (<div className=" w-fit mx-auto px-3 mt-2 border-2 py-2 border-green-900 flex items-center">
                     <FaArrowRight className="mr-3 text-2xl" />
-                    <h2 className="text-center text-2xl">Your short link: <a href={`/l/${url}`}>https://links.crytec.net/l/{url}</a></h2>
+                    <h2 className="text-center text-2xl">Your short link: <a href={`/l/${url}`}>{process.env.NEXT_PUBLIC_BOARD_URL}/l/{url}</a></h2>
                 </div>)}
         </section>
     )

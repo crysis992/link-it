@@ -22,7 +22,7 @@ function RegisterPage() {
     const onSubmit = useCallback(async () => {
         setLoading(true)
 
-        if (password.length < 8) {
+        if (password.length < 4) {
             setError("Password must be at least 8 characters")
             setLoading(false)
             return;

@@ -12,7 +12,7 @@ function RedirectFrame({ data }: { data: RedirectData }) {
         let interval: NodeJS.Timeout | null = null;
 
         setTimeout(() => {
-            // router.replace(data.target);
+            router.replace(data.target);
         }, 3000)
 
         if (count <= 0) return () => clearInterval(interval!);

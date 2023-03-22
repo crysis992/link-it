@@ -1,10 +1,11 @@
 import prisma from '@/libs/prisma/index'
+import { authOptions } from '@/pages/api/auth/[...nextauth]';
+import { getServerSession } from 'next-auth';
 import { getToken } from 'next-auth/jwt';
 import { NextRequest, NextResponse } from 'next/server';
-import jwt from "next-auth/jwt"
-
 
 export async function POST(request: NextRequest) {
+
   const body = await request.json();
 
   const token = await getToken({
@@ -70,8 +71,28 @@ export async function POST(request: NextRequest) {
     }
 
   }
+}
 
+export async function DELETE(request: NextRequest) {
+  console.log('Recieved Request')
+  const token = await getToken({
+    req: request,
+    secret: process.env.NEXTAUTH_SECRET,
+  });
+  const session = await getServerSession(authOptions)
 
+  if (token === null || session?.user.id === undefined) {
+    return NextResponse.json('Unauthorized', { status: 401 });
+  }
+  const { url } = await request.json();
 
+  const result = await prisma.target.findFirst({ where: { id: url }, select: { userId: true } });
 
+  if (token.id !== result?.userId) {
+    console.log('User requested to delete a link but is not the owner!')
+    return NextResponse.json('This link does not belong to your account.', { status: 401 });
+  }
+
+  await prisma.target.delete({ where: { id: url } });
+  return NextResponse.json('Ok', { status: 200 });
 }
