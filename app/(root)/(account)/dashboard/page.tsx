@@ -3,6 +3,9 @@ import GreetingBox from "./components/greeting"
 import prisma from "@/libs/prisma/index"
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import LinkList from "./components/LinkList";
+import { headers } from "next/headers";
+import { getToken } from "next-auth/jwt";
+import Link from "next/link";
 
 export const revalidate = 0;
 
@@ -29,8 +32,11 @@ async function UserDashboard() {
     const session = await getServerSession(authOptions);
     const data = await getAllLinks(session!.user.id);
 
+    console.log(session!.user.id);
+
     return (
-        <main className="container mx-auto">
+        <main className="container mx-auto relative">
+            <Link href='/linktree'><button className="absolute right-0 top-1">Manage Linktree</button></Link>
             <GreetingBox />
             <p className="mt-4">Your link list</p>
             <LinkList data={data} />

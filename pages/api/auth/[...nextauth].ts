@@ -58,20 +58,22 @@ export const authOptions: NextAuthOptions = {
     ],
     pages: {
         signIn: '/login',
+        signOut: '/logout'
     },
     debug: true,
     session: {
         strategy: 'jwt',
-        maxAge: 60 * 60 * 3,
+        maxAge: 60 * 30
+    },
+    jwt: {
+        maxAge: 60 * 30
     },
     callbacks: {
         async session({ session, token }) {
-            console.log('Called session callback')
             session.user = token as any;
             return session;
         },
         async jwt({ token, user }) {
-            console.log('Called JWT callback')
             if (user) {
                 token.id = user.id;
                 token.role = user.role;

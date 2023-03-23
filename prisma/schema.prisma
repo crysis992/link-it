@@ -21,20 +21,37 @@ model Target {
 }
 
 model User {
-  id              String    @id @default(auto()) @map("_id") @db.ObjectId
-  name            String?
-  username        String?   @unique
-  bio             String?
-  email           String?   @unique
-  emialVerified   DateTime?
-  image           String?
-  profileImage    String?
-  coverImage      String?
-  hashedPassword  String?
-  role            String    @default("user")
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-  followingIds    String[]  @db.ObjectId
-  hasNotification Boolean?
-  targets         Target[]
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  name           String?
+  username       String?   @unique
+  bio            String?
+  email          String?   @unique
+  emailVerified  DateTime?
+  image          String?
+  profileImage   String?
+  coverImage     String?
+  hashedPassword String?
+  role           String    @default("user")
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  targets        Target[]
+
+  userlinks LinkTree?
+}
+
+model LinkTree {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  owner   User        @relation(fields: [ownerId], references: [id])
+  ownerId String      @unique @db.ObjectId
+  entries TreeEntry[]
+}
+
+model TreeEntry {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  destination String
+  order       Int      @default(1)
+  tree        LinkTree @relation(fields: [treeId], references: [id], onDelete: Cascade)
+  treeId      String   @db.ObjectId
 }

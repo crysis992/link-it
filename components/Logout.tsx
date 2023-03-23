@@ -1,9 +1,10 @@
 "use client"
-import { getSession, signOut, useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { memo } from "react";
 
 function Logout() {
-    const { data: session, status } = useSession();
+    const { status } = useSession();
     const router = useRouter();
 
     if (status === "loading" || status === "unauthenticated") {
@@ -17,4 +18,4 @@ function Logout() {
         </>
     )
 }
-export default Logout
+export default memo(Logout)
