@@ -58,14 +58,18 @@ function LoginPage() {
                                 <h1 className="text-2xl font-semibold">Login</h1>
                             </div>
                             <div className="divide-y divide-gray-200">
-                                <div className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
-                                    <Input id='email' placeholder="Email" type="text" onChange={({ target }) => setEmail(target.value)} value={email} />
-                                    <Input id='password' placeholder="Password" type="password" onChange={({ target }) => setPassword(target.value)} value={password} />
+                                <form onSubmit={(e) => { e.preventDefault(); handleLogin() }}>
+                                    <div className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
 
-                                    <div className="relative">
-                                        <button onClick={handleLogin} className="bg-green-500 text-white rounded-md px-2 py-1">Login</button>
+                                        <Input id='email' placeholder="Email" type="text" onChange={({ target }) => setEmail(target.value)} value={email} />
+                                        <Input id='password' placeholder="Password" type="password" onChange={({ target }) => setPassword(target.value)} value={password} />
+
+                                        <div className="relative">
+                                            <button onClick={handleLogin} className="bg-green-500 text-white rounded-md px-2 py-1">Login</button>
+                                        </div>
+
                                     </div>
-                                </div>
+                                </form>
                                 <small className='mt-3'>Dont have an account? <span className="underline"><Link href='/register'>Register</Link></span></small>
                             </div>
                         </div>
