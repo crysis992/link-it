@@ -14,6 +14,7 @@ module.exports = {
       },
       fontFamily: {
         primary: ['var(--primary-font)'],
+        buttons: ['var(--btn-font)'],
       },
     },
   },

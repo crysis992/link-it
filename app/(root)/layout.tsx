@@ -1,5 +1,5 @@
 import './globals.css'
-import { Rasa } from 'next/font/google'
+import { Rasa, Cousine } from 'next/font/google'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import clsx from 'clsx'
@@ -11,6 +11,7 @@ export const metadata = {
 }
 
 const font = Rasa({ weight: "400", subsets: ["latin"], variable: '--primary-font' })
+const btnFont = Cousine({ weight: "400", subsets: ["latin"], variable: '--btn-font' })
 
 export default function FrontLayout({ children, }: { children: React.ReactNode }) {
   return (

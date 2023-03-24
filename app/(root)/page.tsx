@@ -12,6 +12,7 @@ export default function Home() {
       <HeroSection />
       <LinkShortener />
       <Features />
+      <div className="mt-56" />
       <Pricing />
     </main>
   )

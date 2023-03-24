@@ -3,16 +3,16 @@ import { IconType } from "react-icons/lib"
 import clsx from "clsx"
 
 interface AlertBoxProps {
-    title: string;
+    title?: string;
     message: string | React.ReactElement<HTMLDivElement>;
     icon?: IconType;
-    variant: "success" | "error";
+    variant?: "success" | "error";
     canClose?: boolean;
     visible?: boolean;
     onClose?: () => void;
 }
 
-function AlertBox({ title, icon, message, variant, canClose, onClose, visible = true }: AlertBoxProps) {
+function AlertBox({ title = 'Error', icon, message, variant = "error", canClose, onClose, visible = true }: AlertBoxProps) {
 
     const variantStyle = clsx({
         "bg-green-100 text-green-900 border border-green-900 ": variant === "success",

@@ -35,14 +35,36 @@ model User {
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
   targets        Target[]
+  socials        Social[]
 
   userlinks LinkTree?
+}
+
+type Social {
+  provider SocialProvider
+  username String
+  public   Boolean
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum SocialProvider {
+  TWITTER
+  FACEBOOK
+  TIKTOK
+  INSTAGRAM
+  YOUTUBE
+  TWITCH
+  SNAPCHAT
 }
 
 model LinkTree {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
-  owner   User        @relation(fields: [ownerId], references: [id])
+  owner   User        @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   ownerId String      @unique @db.ObjectId
   entries TreeEntry[]
 }

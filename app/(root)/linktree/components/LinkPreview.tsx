@@ -4,18 +4,21 @@ import { useEffect, useRef, useState } from "react";
 import { DragDropContext, Draggable } from "react-beautiful-dnd";
 import { StrictModeDroppable as Droppable } from './StrictModeDropable'
 import { useRouter } from "next/navigation";
+import AddEntry from "./AddEntry";
+import { RxDragHandleHorizontal } from 'react-icons/rx'
 
 type LinkPreviewProps = {
     user: string;
+    username: string
 }
 
-function LinkPreview({ user }: LinkPreviewProps) {
+function LinkPreview({ user, username }: LinkPreviewProps) {
 
     const [list, setList] = useState<TreeEntry[]>([]);
     const [loading, setLoading] = useState(false);
     const [requireUpdate, setRequireUpdate] = useState(true);
     const router = useRouter();
-    const treeId = useRef();
+    const treeId = useRef<string>();
 
 
     useEffect(() => {
@@ -73,21 +76,6 @@ function LinkPreview({ user }: LinkPreviewProps) {
         }).finally(() => setLoading(false))
     }
 
-    const handleAdd = async () => {
-        const response = await fetch('/api/linktree', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                tree: treeId.current,
-                owner: user,
-                name: 'Instagram',
-                url: 'https://www.instagram.com/'
-            })
-        })
-        setRequireUpdate(true);
-        router.refresh();
-    }
-
     const handleDelete = async (id: string) => {
         const result = await fetch('/api/linktree/entry', {
             method: 'DELETE',
@@ -114,7 +102,10 @@ function LinkPreview({ user }: LinkPreviewProps) {
     return (
         <div className="mx-auto w-full flex flex-col items-center">
             <h1>Your Links: {list.length}/10</h1>
-            <button className="w-2/4 my-5 rounded-lg max-w-md" onClick={handleAdd}>Add Entry</button>
+            <div className="flex items-center justify-center gap-3 w-1/3">
+                <AddEntry currentTree={treeId.current!} userId={user} setRequireUpdate={setRequireUpdate} />
+                <a href={process.env.NEXT_PUBLIC_BOARD_URL + '/' + username} target="_blank" ><button className="">Open in new tab</button></a>
+            </div>
             <section className="w-full max-w-5xl">
                 <DragDropContext onDragEnd={handleOnDragEnd}>
                     <Droppable droppableId="linklist">
@@ -126,11 +117,12 @@ function LinkPreview({ user }: LinkPreviewProps) {
                                             {(provided) => (
                                                 <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}
                                                     className="bg-slate-200 border border-slate-400 my-5 flex items-center py-3">
-                                                    <p className="font-medium text-lg grow">{item.name}</p>
+                                                    <RxDragHandleHorizontal size={30} />
+                                                    <p className="font-medium text-lg grow ml-3 font-buttons">{item.name} <span className="text-sm ml-5">{item.destination} </span></p>
 
                                                     <div className="flex gap-3 justify-self-end pr-3">
                                                         <button onClick={() => handleDelete(item.id)}>Delete</button>
-                                                        <button onClick={() => handleDelete(item.id)}>Edit</button>
+                                                        <button className="btn-red" onClick={() => handleDelete(item.id)}>Edit</button>
                                                     </div>
                                                 </div>
                                             )}
@@ -144,7 +136,7 @@ function LinkPreview({ user }: LinkPreviewProps) {
                 </DragDropContext>
             </section>
 
-            <button onClick={handleOnSave} className="w-full">Save</button>
+            <button onClick={handleOnSave} className="w-1/4 my-5 rounded-lg max-w-xs">Save</button>
         </div>
     )
 }

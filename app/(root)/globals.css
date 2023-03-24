@@ -7,16 +7,19 @@ html {
 }
 
 button {
-    font-weight: 500;
-    background-color: green;
-    border-radius: 5px;
-    padding: 6px;
-    transition: all 0.25s ease;
-    color: white;
+    @apply font-medium bg-green-500 rounded-md p-1 transition duration-200 text-white font-buttons text-sm
 }
 
 button:hover {
-    background-color: darkgreen;
+    @apply bg-green-400
+}
+
+.btn-red {
+    @apply bg-red-500
+}
+
+.btn-red:hover {
+    @apply bg-red-600
 }
 
 
