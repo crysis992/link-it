@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { PropagateLoader } from "react-spinners";
 
 function CreateTreeButton() {
     const [loading, setLoading] = useState(false);
@@ -25,7 +26,7 @@ function CreateTreeButton() {
     };
 
     if (loading) {
-        return <button disabled className="bg-gray-400 hover:bg-gray-400">Loading...</button>
+        return <PropagateLoader size={30} />
     }
 
     return (

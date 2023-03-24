@@ -10,9 +10,10 @@ interface AlertBoxProps {
     canClose?: boolean;
     visible?: boolean;
     onClose?: () => void;
+    className?: string;
 }
 
-function AlertBox({ title = 'Error', icon, message, variant = "error", canClose, onClose, visible = true }: AlertBoxProps) {
+function AlertBox({ title = 'Error', icon, message, variant = "error", canClose, onClose, visible = true, className }: AlertBoxProps) {
 
     const variantStyle = clsx({
         "bg-green-100 text-green-900 border border-green-900 ": variant === "success",
@@ -24,7 +25,7 @@ function AlertBox({ title = 'Error', icon, message, variant = "error", canClose,
     }
 
     return (
-        <div className={clsx(variantStyle, 'p-3 my-1 relative')}>
+        <div className={clsx(variantStyle, 'p-3 my-1 relative', className)}>
             {canClose && (<div onClick={onClose} className="absolute top-0 right-1 cursor-pointer">X</div>)}
             <h2 className="font-semibold">{title}</h2>
             <p>{message}</p>

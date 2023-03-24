@@ -3,8 +3,6 @@ import GreetingBox from "./components/greeting"
 import prisma from "@/libs/prisma/index"
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import LinkList from "./components/LinkList";
-import { headers } from "next/headers";
-import { getToken } from "next-auth/jwt";
 import Link from "next/link";
 
 export const revalidate = 0;

@@ -17,26 +17,32 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const treeId = body.tree;
     const name = body.name;
+    const destination = body.url;
 
     const treeOwner = await prisma.linkTree.findUnique({
         where: {
             ownerId: owner,
-        }, select: {
-            ownerId: true
+        },
+        select: {
+            ownerId: true,
+            entries: true,
         }
     })
 
     if (treeOwner == null || treeOwner?.ownerId !== owner) {
         return NextResponse.json('Unauthorized', { status: 401 });
     }
-    console.log('======= ID', treeId)
+
+    if (treeOwner.entries.length >= 10) {
+        return NextResponse.json('Limit reached', { status: 429 });
+    }
 
     try {
         const record = await prisma.treeEntry.create({
             data: {
                 treeId: treeId,
                 name: name,
-                destination: 'https://google.de',
+                destination: destination,
                 order: 0,
             }
         })

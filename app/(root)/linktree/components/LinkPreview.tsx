@@ -6,17 +6,21 @@ import { StrictModeDroppable as Droppable } from './StrictModeDropable'
 import { useRouter } from "next/navigation";
 import AddEntry from "./AddEntry";
 import { RxDragHandleHorizontal } from 'react-icons/rx'
+import AlertBox from "@/components/AlertBox";
+import PropagateLoader from "react-spinners/PropagateLoader";
 
 type LinkPreviewProps = {
     user: string;
-    username: string
+    username: string;
+    linkLimit: number;
 }
 
-function LinkPreview({ user, username }: LinkPreviewProps) {
+function LinkPreview({ user, username, linkLimit }: LinkPreviewProps) {
 
     const [list, setList] = useState<TreeEntry[]>([]);
     const [loading, setLoading] = useState(false);
     const [requireUpdate, setRequireUpdate] = useState(true);
+    const [error, setError] = useState('');
     const router = useRouter();
     const treeId = useRef<string>();
 
@@ -91,9 +95,8 @@ function LinkPreview({ user, username }: LinkPreviewProps) {
 
     if (loading) {
         return (
-            <div className="mx-auto w-full">
-                <h1>Your Links: {list.length}/10</h1>
-                <p>Loading...</p>
+            <div className="mx-auto -translate-y-1/2 transition-all duration-700">
+                <PropagateLoader size={20} color="#26D38A" />
             </div>
         )
     }
@@ -101,9 +104,10 @@ function LinkPreview({ user, username }: LinkPreviewProps) {
 
     return (
         <div className="mx-auto w-full flex flex-col items-center">
-            <h1>Your Links: {list.length}/10</h1>
+            <AlertBox canClose onClose={() => setError('')} message={error} visible={error.length > 0} className='w-2/4' />
+            <h1>Your Links: {list.length}/{linkLimit}</h1>
             <div className="flex items-center justify-center gap-3 w-1/3">
-                <AddEntry currentTree={treeId.current!} userId={user} setRequireUpdate={setRequireUpdate} />
+                <AddEntry setError={setError} currentTree={treeId.current!} userId={user} setRequireUpdate={setRequireUpdate} />
                 <a href={process.env.NEXT_PUBLIC_BOARD_URL + '/' + username} target="_blank" ><button className="">Open in new tab</button></a>
             </div>
             <section className="w-full max-w-5xl">

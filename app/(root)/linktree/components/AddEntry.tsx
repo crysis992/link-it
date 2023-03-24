@@ -1,4 +1,3 @@
-import AlertBox from "@/components/AlertBox";
 import Input from "@/components/Input";
 import Modal from "@/components/Modal";
 import { useState } from "react";
@@ -7,16 +6,17 @@ interface AddEntryProps {
     setRequireUpdate: (shouldUpdate: boolean) => void
     currentTree: string;
     userId: string;
+    setError: (message: string) => void;
 }
 
 
-function AddEntry({ setRequireUpdate, currentTree, userId }: AddEntryProps) {
+function AddEntry({ setRequireUpdate, currentTree, userId, setError }: AddEntryProps) {
     const [open, setOpen] = useState(false);
 
     const [title, setTitle] = useState("");
     const [link, setLink] = useState("");
 
-    const [error, setError] = useState('');
+
 
     const handleAdd = async () => {
         setError('')
@@ -39,6 +39,8 @@ function AddEntry({ setRequireUpdate, currentTree, userId }: AddEntryProps) {
         closeModal(true)
         if (response.status === 200) {
             setRequireUpdate(true);
+        } else {
+            setError(response.statusText);
         }
     }
 
@@ -61,7 +63,6 @@ function AddEntry({ setRequireUpdate, currentTree, userId }: AddEntryProps) {
 
     return (
         <div>
-            <AlertBox message={error} visible={error.length > 0} />
             <Modal open={open} title='Add a new Link' onClose={() => { closeModal(true) }} onConfirm={handleAdd} body={bodyContent} actionLabel='Add' buttonVariant="green" />
             <button className="my-5 rounded-lg max-w-md" onClick={() => setOpen(true)}>Add Entry</button>
         </div>
