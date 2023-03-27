@@ -8,6 +8,7 @@ import AddEntry from "./AddEntry";
 import { RxDragHandleHorizontal } from 'react-icons/rx'
 import AlertBox from "@/components/AlertBox";
 import PropagateLoader from "react-spinners/PropagateLoader";
+import EditEntry from "./EditEntry";
 
 type LinkPreviewProps = {
     user: string;
@@ -124,9 +125,17 @@ function LinkPreview({ user, username, linkLimit }: LinkPreviewProps) {
                                                     <RxDragHandleHorizontal size={30} />
                                                     <p className="font-medium text-lg grow ml-3 font-buttons">{item.name} <span className="text-sm ml-5">{item.destination} </span></p>
 
-                                                    <div className="flex gap-3 justify-self-end pr-3">
-                                                        <button onClick={() => handleDelete(item.id)}>Delete</button>
-                                                        <button className="btn-red" onClick={() => handleDelete(item.id)}>Edit</button>
+                                                    <div className="flex gap-2 pr-3">
+                                                        <EditEntry
+                                                            setError={setError}
+                                                            setRequireUpdate={setRequireUpdate}
+                                                            itemId={item.id}
+                                                            initLink={item.destination}
+                                                            initTitle={item.name}
+                                                        />
+
+
+                                                        <button className="btn-red" onClick={() => handleDelete(item.id)}>Delete</button>
                                                     </div>
                                                 </div>
                                             )}

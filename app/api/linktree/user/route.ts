@@ -9,18 +9,21 @@ export async function GET(request: Request) {
     if (!user) {
         return NextResponse.json('User not found', { status: 404 });
     }
-
-    const result = await prisma.linkTree.findUnique({
-        where: {
-            ownerId: user
-        },
-        include: {
-            entries: {
-                orderBy: {
-                    order: "asc"
+    try {
+        const result = await prisma.linkTree.findUnique({
+            where: {
+                ownerId: user
+            },
+            include: {
+                entries: {
+                    orderBy: {
+                        order: "asc"
+                    }
                 }
-            }
-        },
-    })
-    return NextResponse.json(result)
+            },
+        })
+        return NextResponse.json(result)
+    } catch (err) {
+        console.log(err)
+    }
 }

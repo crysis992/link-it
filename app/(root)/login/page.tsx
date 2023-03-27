@@ -5,6 +5,8 @@ import { signIn, useSession } from "next-auth/react";
 import { useCallback, useEffect, useState } from "react";
 import { FiAlertCircle } from "react-icons/fi";
 import { useRouter } from "next/navigation";
+import { store } from '@/redux/store'
+import { fetchUser } from '@/redux/features/users/userSlice'
 
 function LoginPage() {
     const { data: session, status } = useSession();
@@ -29,6 +31,7 @@ function LoginPage() {
 
     useEffect(() => {
         if (status === "authenticated") {
+            store.dispatch(fetchUser())
             router.push("/");
         }
     }, [router, status])
