@@ -1,0 +1,6 @@
+//robots 
+
+#Block all crawlers for /dashboard
+User-agent: *
+Disallow: /dashboard/
+Disallow: /admin/

@@ -41,7 +41,7 @@ model User {
 }
 
 type Social {
-  provider SocialProvider
+  provider String
   username String
   public   Boolean
 }
@@ -51,22 +51,14 @@ enum Role {
   ADMIN
 }
 
-enum SocialProvider {
-  TWITTER
-  FACEBOOK
-  TIKTOK
-  INSTAGRAM
-  YOUTUBE
-  TWITCH
-  SNAPCHAT
-}
-
 model LinkTree {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
-  owner   User        @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  ownerId String      @unique @db.ObjectId
-  entries TreeEntry[]
+  owner     User        @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId   String      @unique @db.ObjectId
+  theme     String      @default("default")
+  sensitive Boolean     @default(false)
+  entries   TreeEntry[]
 }
 
 model TreeEntry {

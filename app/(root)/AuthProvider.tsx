@@ -1,6 +1,7 @@
 "use client"
 
 import { SessionProvider } from "next-auth/react"
+import { memo } from "react"
 
 function AuthProvider({ children }: { children: React.ReactNode }) {
     return (
@@ -9,4 +10,4 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
         </SessionProvider>
     )
 }
-export default AuthProvider
+export default memo(AuthProvider)

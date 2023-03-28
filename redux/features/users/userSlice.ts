@@ -1,6 +1,6 @@
 "use client"
-import { Target, } from "@prisma/client"
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
+import { Social, Target, } from "@prisma/client"
+import { createSlice, createAsyncThunk, Draft, PayloadAction } from "@reduxjs/toolkit"
 
 type User = {
     id: string,
@@ -10,6 +10,7 @@ type User = {
     profileImage: string | null,
     role: 'user' | 'admin',
     targets: Target[],
+    socials: Social[]
 }
 
 type State = {
@@ -33,7 +34,20 @@ const initialState: State = {
 const usersSlice = createSlice({
     name: 'user',
     initialState,
-    reducers: {},
+    reducers: {
+        removeSocial: (state: Draft<State>, action: PayloadAction<string>) => {
+            console.log(action.payload)
+            state.user!.socials = state.user!.socials.filter((social) => social.provider !== action.payload)
+        },
+        addSocial: (state: Draft<State>, action: PayloadAction<Social>) => {
+            const index = state.user!.socials.findIndex((entry) => entry.provider === action.payload.provider);
+            if (index !== -1) {
+                state.user!.socials[index].username = action.payload.username
+            } else {
+                state.user!.socials.push(action.payload)
+            }
+        }
+    },
     extraReducers(builder) {
         builder.addCase(fetchUser.pending, (state) => {
             state.status = 'loading';
@@ -54,5 +68,7 @@ const usersSlice = createSlice({
 })
 
 export const selectUser = (state: { user: State }) => state.user.user;
+
+export const { removeSocial, addSocial } = usersSlice.actions
 
 export default usersSlice.reducer;

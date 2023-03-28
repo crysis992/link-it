@@ -40,7 +40,7 @@ async function LinkTreeIndex() {
 
 
     return (
-        <div className="container mx-auto bg-slate-50 flex flex-col items-center gap-5">
+        <div className="container mx-auto flex flex-col items-center gap-5">
             <LinkPreview user={session.user.id} username={session.user.name!} linkLimit={10} />
         </div>
     )

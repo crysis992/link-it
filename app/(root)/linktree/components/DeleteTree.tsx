@@ -1,10 +1,10 @@
 "use client"
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { PropagateLoader } from "react-spinners";
 
-function CreateTreeButton() {
+function DeleteTree() {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
 
@@ -33,4 +33,4 @@ function CreateTreeButton() {
         <button className='bg-red-500 hover:bg-red-600' onClick={handleCreateTree}>DELETE</button>
     )
 }
-export default CreateTreeButton
+export default memo(DeleteTree)

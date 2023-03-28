@@ -21,6 +21,9 @@ function UserTest() {
             <p>User ID: {user.id}</p>
             <div>Avatar: ...coming soon</div>
             <div>Profile Banner: ...coming soon</div>
+            {user.socials.map((soc) => (
+                <div key={soc.provider}> {soc.provider} </div>
+            ))}
         </div>
     )
 }

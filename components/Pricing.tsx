@@ -11,17 +11,17 @@ function Pricing() {
                 <div className="shadow p-5 rounded-lg border-t-4 border-green-400 bg-white flex flex-col max-h-[300px]">
                     <p className="uppercase text-sm font-medium text-gray-500">No Account required</p>
                     <p className="mt-4 text-3xl text-gray-700 font-medium">Free</p>
-                    <p className="mt-4 font-medium text-gray-700"> Up to 5 links</p>
+                    <p className="mt-4 font-medium text-gray-700">Limited link lifetime</p>
 
                     <div className="mt-8 grow">
-                        <CheckedList entries={['No special features', 'Ads on redirect pages']} />
+                        <CheckedList entries={['No special features', '5 second redirect time']} />
                     </div>
                 </div>
 
                 <div className="shadow p-5 rounded-lg border-t-4 border-green-400 bg-white flex flex-col">
                     <p className="uppercase text-sm font-medium text-gray-500">Registered</p>
                     <p className="mt-4 text-3xl text-gray-700 font-medium">Free</p>
-                    <p className="mt-4 font-medium text-gray-700"> Up to 100 links</p>
+                    <p className="mt-4 font-medium text-gray-700">Unlimited links</p>
 
                     <div className="mt-8 grow">
                         <CheckedList entries={['Access to polls', 'Access to linktree', 'Statistics', 'Manage your links']} />
@@ -36,7 +36,7 @@ function Pricing() {
 
                 <div className="shadow p-5 rounded-lg border-t-4 border-green-400 bg-white flex flex-col">
                     <p className="uppercase text-sm font-medium text-gray-500">Pro</p>
-                    <p className="mt-4 text-3xl text-gray-700 font-medium">3,49€ / month</p>
+                    <p className="mt-4 text-3xl text-gray-700 font-medium">79,90€ / year</p>
                     <p className="mt-4 font-semibold text-gray-700"> Unlimited links</p>
 
                     <div className="mt-8">
@@ -45,7 +45,7 @@ function Pricing() {
 
                     <div className="mt-8 grow">
                         <button className="bg-green-400 hover:bg-green-500 px-3 py-2 rounded-lg w-full text-white">
-                            Start subscription
+                            Purchase now
                         </button>
                     </div>
                 </div>

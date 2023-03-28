@@ -1,16 +1,17 @@
 import { HTMLInputTypeAttribute } from "react";
-
+import clsx from "clsx"
 interface InputProps {
     id: string;
     type: HTMLInputTypeAttribute
     placeholder: string;
     value: string;
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    className?: string;
 }
 
-function Input({ id, type, placeholder, onChange, value }: InputProps) {
+function Input({ id, type, placeholder, onChange, value, className }: InputProps) {
     return (
-        <div className="relative">
+        <div className={clsx('relative', className)}>
             <input autoComplete='off'
                 id={id}
                 name={id}

@@ -1,0 +1,25 @@
+.linktree_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(109, 39, 39);
+    min-height: 100vh;
+}
+
+.linktree_container > section > div {
+    background-color: white;
+    padding: 5px 20px;
+    min-width: 250px;
+    text-align: center;
+    margin-bottom: 5px;
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 200ms;
+}
+
+.linktree_container > section > div:hover {
+    background-color: rgb(86, 78, 78);
+    padding: 5px 20px;
+    min-width: 250px;
+    text-align: center;
+}

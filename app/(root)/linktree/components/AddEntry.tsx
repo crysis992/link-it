@@ -1,6 +1,6 @@
 import Input from "@/components/Input";
 import Modal from "@/components/Modal";
-import { useState } from "react";
+import { memo, useState } from "react";
 
 interface AddEntryProps {
     setRequireUpdate: (shouldUpdate: boolean) => void
@@ -68,4 +68,4 @@ function AddEntry({ setRequireUpdate, currentTree, userId, setError }: AddEntryP
         </div>
     )
 }
-export default AddEntry
+export default memo(AddEntry)

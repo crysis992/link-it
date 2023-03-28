@@ -7,12 +7,13 @@ export type ModalProps = {
     onClose: () => void,
     onConfirm: () => void,
     title: string,
-    body: React.ReactElement<any>,
+    body?: React.ReactElement<any>,
     actionLabel?: string,
     buttonVariant?: 'green' | 'red' | 'disabled',
+    children?: React.ReactNode
 }
 
-function Modal({ open, onClose, onConfirm, title, body, buttonVariant = 'red', actionLabel = 'Delete' }: ModalProps) {
+function Modal({ open, onClose, onConfirm, title, body, buttonVariant = 'red', actionLabel = 'Delete', children }: ModalProps) {
 
     const handleEscKey = useCallback((e: KeyboardEvent) => {
         if (e.key === "Escape") {
@@ -44,7 +45,7 @@ function Modal({ open, onClose, onConfirm, title, body, buttonVariant = 'red', a
 
             <div className="bg-white w-[600px] min-h-[200px] flex flex-col justify-between p-3">
                 <h1 className="text-xl font-bold">{title}</h1>
-                <div className="justify-self-end"> {body} </div>
+                <div className="justify-self-end"> {children} {body}</div>
                 <div className="flex justify-evenly p-2">
                     <button className="px-5 bg-gray-500 hover:bg-gray-600" onClick={onClose}>Close</button>
                     <button onClick={onConfirm} className={clsx(buttonClasses, 'px-5')}>{actionLabel}</button>

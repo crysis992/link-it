@@ -1,0 +1,11 @@
+.linktree_container {
+    background: radial-gradient(circle at 15% 96%, rgba(244, 0, 255, 1) 63%, rgba(255, 0, 0, 1) 100%);
+}
+
+.linktree_container > section > div:hover {
+    background-color: rgb(172, 62, 80);
+}
+
+.social_icons > a > svg {
+    color: pink
+}

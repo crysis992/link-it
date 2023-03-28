@@ -3,9 +3,9 @@ import UserTest from "./UserTest";
 async function ProfileSettingsPage() {
 
     return (
-        <div className="container mx-auto">
-            <h1>Work in progress...</h1>
-            <UserTest />
+        <div className="bg-pink-300">
+            <h1>Profile Settings</h1>
+            <h2>Coming soon..</h2>
         </div>
     )
 }

@@ -48,3 +48,61 @@ h2 {
 #stripes span {
     height: 40px;
 }
+
+
+
+.lt-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.lt-username {
+    font-size: 3rem;
+    margin-bottom: 3rem;
+}
+
+.lt-buttons {
+    display: flex;
+    flex-direction: column;
+}
+
+.lt-button {
+    transition: all 0.3s linear;
+}
+
+.lt-icons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.lt-icons > a > svg {
+    transition: color 0.25s linear;
+}
+
+
+/* Default Style */
+
+.button-default {
+    outline: 1px solid black;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    width: 200px;
+}
+
+.button-default:hover {
+    outline: 1px solid transparent;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    background-color: rgba(102, 228, 98, 0.761)
+}
+
+.icons-default > a > svg {
+    color: gray;
+}
+
+.icons-default > a > svg:hover {
+    color: green;
+}

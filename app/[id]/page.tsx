@@ -1,6 +1,12 @@
 import prisma from "@/libs/prisma/index"
+import Script from "next/script"
+import { IconType } from "react-icons";
+import { RxCross1 } from "react-icons/rx";
+import { getIconByName, getProfileURL } from '@/libs/socials';
+import clsx from "clsx"
 
 async function getLinkTree(user: string) {
+
 
     const result = await prisma.linkTree.findUnique({
         where: {
@@ -17,41 +23,70 @@ async function getLinkTree(user: string) {
     return result;
 }
 
-async function getUserIdByName(name: string) {
+async function getUser(name: string) {
     const result = await prisma.user.findUnique({
         where: {
             username: name
         },
         select: {
-            id: true
+            id: true,
+            socials: true
         }
     })
-    return result?.id;
+    return result;
+}
+
+function SocialPlatformIcon(name: string) {
+    const Icon: IconType = getIconByName(name);
+    if (!Icon) return <RxCross1 />
+    return <Icon size={30} />;
 }
 
 async function UserLinkTree({ params }: { params: { id: string } }) {
-    const username = await getUserIdByName(params.id);
-    if (!username) { return null; }
+    const user = await getUser(params.id);
+    if (!user) { return null; }
 
-    const tree = await getLinkTree(username);
+    const tree = await getLinkTree(user.id);
 
-    tree?.entries.sort()
+    if (!tree) {
+        return <h1>Sorry, could not find a linktree for this user</h1>
+    }
+
+    const theme = 'default';
 
     return (
-        <main className="container mx-auto">
-            <h1 className="text-3xl font-semibold text-center my-5">@{params.id}</h1>
-            <section className="w-1/4 mx-auto mt-20">
-                {
-                    tree?.entries.map(entry => {
-                        return (
-                            <div className="bg-slate-100 p-2 mb-5 font-semibold text-center hover:bg-slate-400 transition" key={entry.id}>
-                                <a href={entry.destination} ><p>{entry.name}</p></a>
-                            </div>
-                        )
-                    })
-                }
-            </section>
-        </main>
+        <>
+            {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document */}
+            {/* <Script id="pageoutput" strategy="beforeInteractive">
+                {`
+                    var link = document.createElement('link');
+                    link.href = "/themes/${theme}.css";
+                    link.rel = "stylesheet";
+                    document.head.appendChild(link);
+                `}
+            </Script> */}
+            <main className={clsx('lt-container', `container-${theme}`)}>
+                <h1 className={clsx('lt-username', `username-${theme}`)}>@{params.id}</h1>
+                <section className={clsx('lt-buttons', `buttons-${theme}`)}>
+                    {
+                        tree.entries.map(entry => {
+                            return (
+                                <div className={clsx('lt-button', `button-${theme}`)} key={entry.id}>
+                                    <a href={entry.destination} ><p>{entry.name}</p></a>
+                                </div>
+                            )
+                        })
+                    }
+                </section>
+                <div className={clsx('lt-icons', `icons-${theme}`)}>
+                    {
+                        user.socials.map((social) => (
+                            <a key={social.provider} href={getProfileURL(social.provider, social.username)} target='_blank'>{SocialPlatformIcon(social.provider)}</a>
+                        ))
+                    }
+                </div>
+            </main>
+        </>
     )
 }
 export default UserLinkTree
