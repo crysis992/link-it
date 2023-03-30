@@ -1,15 +1,26 @@
+import React, { ChangeEventHandler } from "react";
+
 interface CheckBoxProps {
-    id: string;
     label: string;
-    handleCheck: () => void;
-    checked?: boolean;
+    value: string;
+    checked: boolean;
+    onChange: ChangeEventHandler<HTMLInputElement>;
 }
 
-export default function CheckBox({ id, label, handleCheck, checked = false }: CheckBoxProps) {
+function CheckBox(props: CheckBoxProps) {
     return (
-        <div className="flex items-center gap-3">
-            <input type="radio" name="18+" id={id} className="w-5 h-5" onChange={handleCheck} checked={checked} />
-            <label htmlFor={id} className="">{label}</label>
+        <div>
+            <label>
+                <input
+                    type="checkbox"
+                    value={props.value}
+                    checked={props.checked}
+                    onChange={props.onChange}
+                />
+                {props.label}
+            </label>
         </div>
-    )
+    );
 }
+
+export default CheckBox;

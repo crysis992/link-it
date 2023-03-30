@@ -54,18 +54,33 @@ enum Role {
 model LinkTree {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
-  owner     User        @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  ownerId   String      @unique @db.ObjectId
-  theme     String      @default("default")
-  sensitive Boolean     @default(false)
-  entries   TreeEntry[]
+  owner         User        @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId       String      @unique @db.ObjectId
+  theme         String      @default("default")
+  sensitive     Boolean     @default(false)
+  sensitiveType String?
+  entries       TreeEntry[]
+  statistics    Statistic[]
 }
 
 model TreeEntry {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   destination String
-  order       Int      @default(1)
-  tree        LinkTree @relation(fields: [treeId], references: [id], onDelete: Cascade)
-  treeId      String   @db.ObjectId
+  order       Int         @default(1)
+  tree        LinkTree    @relation(fields: [treeId], references: [id], onDelete: Cascade)
+  treeId      String      @db.ObjectId
+  Statistic   Statistic[]
+}
+
+model Statistic {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  referral  String?
+  country   String?
+  ip        String
+  entry     TreeEntry @relation(fields: [entryId], references: [id], onDelete: Cascade)
+  entryId   String    @db.ObjectId
+  visitedAt DateTime  @default(now())
+  tree      LinkTree  @relation(fields: [treeId], references: [id], onDelete: Cascade)
+  treeId    String    @db.ObjectId
 }

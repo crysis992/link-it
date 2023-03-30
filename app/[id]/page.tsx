@@ -4,6 +4,8 @@ import { IconType } from "react-icons";
 import { RxCross1 } from "react-icons/rx";
 import { getIconByName, getProfileURL } from '@/libs/socials';
 import clsx from "clsx"
+import Modal from "@/components/Modal";
+import SensitivePopup from "./SensitivePopup";
 
 async function getLinkTree(user: string) {
 
@@ -53,6 +55,8 @@ async function UserLinkTree({ params }: { params: { id: string } }) {
     }
 
     const theme = 'default';
+    const isSensitive = tree.sensitive;
+
 
     return (
         <>
@@ -66,6 +70,7 @@ async function UserLinkTree({ params }: { params: { id: string } }) {
                 `}
             </Script> */}
             <main className={clsx('lt-container', `container-${theme}`)}>
+                {isSensitive && (<SensitivePopup />)}
                 <h1 className={clsx('lt-username', `username-${theme}`)}>@{params.id}</h1>
                 <section className={clsx('lt-buttons', `buttons-${theme}`)}>
                     {

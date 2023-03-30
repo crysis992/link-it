@@ -1,5 +1,5 @@
 "use client"
-import { Social, Target, } from "@prisma/client"
+import { LinkTree, Social, Target, } from "@prisma/client"
 import { createSlice, createAsyncThunk, Draft, PayloadAction } from "@reduxjs/toolkit"
 
 type User = {
@@ -10,7 +10,8 @@ type User = {
     profileImage: string | null,
     role: 'user' | 'admin',
     targets: Target[],
-    socials: Social[]
+    socials: Social[],
+    userlinks: LinkTree,
 }
 
 type State = {
@@ -46,6 +47,9 @@ const usersSlice = createSlice({
             } else {
                 state.user!.socials.push(action.payload)
             }
+        },
+        toggleSensitive: (state) => {
+            state.user!.userlinks.sensitive = !state.user!.userlinks.sensitive;
         }
     },
     extraReducers(builder) {
@@ -69,6 +73,6 @@ const usersSlice = createSlice({
 
 export const selectUser = (state: { user: State }) => state.user.user;
 
-export const { removeSocial, addSocial } = usersSlice.actions
+export const { removeSocial, addSocial, toggleSensitive } = usersSlice.actions
 
 export default usersSlice.reducer;
