@@ -32,6 +32,8 @@ async function UserDashboard() {
 
     console.log(session!.user.id);
 
+    console.log(data);
+
     return (
         <main className="container mx-auto relative">
             <Link href='/linktree'><button className="absolute right-0 top-1">Manage Linktree</button></Link>
