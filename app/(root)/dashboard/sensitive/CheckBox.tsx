@@ -10,12 +10,13 @@ interface CheckBoxProps {
 function CheckBox(props: CheckBoxProps) {
     return (
         <div>
-            <label>
+            <label className="flex items-center gap-1">
                 <input
                     type="checkbox"
                     value={props.value}
                     checked={props.checked}
                     onChange={props.onChange}
+                    className='bg-green-400'
                 />
                 {props.label}
             </label>

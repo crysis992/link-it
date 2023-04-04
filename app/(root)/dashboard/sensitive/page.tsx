@@ -43,7 +43,7 @@ function SensitiveWarning() {
     return (
         <div>
             <h1>Sensitive Warning</h1>
-            <div>Aktiv: {user.userlinks.sensitive ? 'Ja' : 'Nein'}</div>
+            <div>Active: <span className="font-bold">{user.userlinks.sensitive ? 'Yes' : 'No'}</span> </div>
             <form onSubmit={(e) => e.preventDefault()}>
                 <p>Display a sensitive content warning before visitors can view your linktree.</p>
 

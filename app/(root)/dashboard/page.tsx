@@ -4,6 +4,7 @@ import prisma from "@/libs/prisma/index"
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import LinkList from "./components/LinkList";
 import Link from "next/link";
+import Button from "@/components/Button";
 
 export const revalidate = 0;
 
@@ -31,13 +32,8 @@ async function UserDashboard() {
     const data = await getAllLinks(session!.user.id);
 
     console.log(session!.user.id);
-
-    console.log(data);
-
     return (
         <main className="container mx-auto relative">
-            <Link href='/linktree'><button className="absolute right-0 top-1">Manage Linktree</button></Link>
-            <Link href='/dashboard/profile/settings'><button className="absolute right-32 top-1">Settings</button></Link>
             <GreetingBox />
             <p className="mt-4">Your link list</p>
             <LinkList data={data} />

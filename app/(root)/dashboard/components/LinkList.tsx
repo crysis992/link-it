@@ -46,27 +46,28 @@ function LinkList({ data }: { data: LinkData[] }) {
                 body={<div>Are you sure you want to delete {selectedLink.current}?</div>}
             />
             {error && <AlertBox title="Error" message='Something went wrong' variant="error" />}
-
-            <table className="min-w-full text-left text-sm font-light my-5">
-                <thead className="border-b font-medium border-neutral-500">
-                    <tr>
-                        <th scope="col" className="px-6 py-4">Short</th>
-                        <th scope="col" className="px-6 py-4">Destination</th>
-                        <th scope="col" className="px-6 py-4">Visits</th>
-                        <th scope="col" className="px-6 py-4">Manage</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {data.map((link) => (
-                        <tr key={link.id} className="border-b transition duration-200 ease-in-out hover:bg-neutral-100">
-                            <td className="whitespace-nowrap px-6 py-4 font-medium">{process.env.NEXT_PUBLIC_BOARD_URL}/l/{link.shortId}</td>
-                            <td className="whitespace-nowrap px-6 py-4 font-medium">{link.target.length > 40 ? link.target.substring(0, 40) + '...' : link.target}</td>
-                            <td className="whitespace-nowrap px-6 py-4 font-medium">{link.visits}</td>
-                            <td className="whitespace-nowrap px-6 py-4"><button onClick={() => { selectedLink.current = link.id; setModalVisible(true) }} className="bg-red-400 hover:bg-red-500">Delete</button></td>
+            <div className="overflow-x-auto">
+                <table className="table-auto text-left text-sm font-light my-5 mx-auto">
+                    <thead className="border-b font-medium border-neutral-500">
+                        <tr>
+                            <th scope="col" className="px-6 py-4">Short</th>
+                            <th scope="col" className="px-6 py-4">Destination</th>
+                            <th scope="col" className="px-6 py-4">Visits</th>
+                            <th scope="col" className="px-6 py-4">Manage</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {data.map((link) => (
+                            <tr key={link.id} className="border-b transition duration-200 ease-in-out hover:bg-neutral-100">
+                                <td className="whitespace-nowrap px-6 py-4 font-medium">{process.env.NEXT_PUBLIC_BOARD_URL}/l/{link.shortId}</td>
+                                <td className="whitespace-nowrap px-6 py-4 font-medium">{link.target.length > 40 ? link.target.substring(0, 40) + '...' : link.target}</td>
+                                <td className="whitespace-nowrap px-6 py-4 font-medium">{link.visits}</td>
+                                <td className="whitespace-nowrap px-6 py-4"><button onClick={() => { selectedLink.current = link.id; setModalVisible(true) }} className="bg-red-400 hover:bg-red-500">Delete</button></td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </section>
     )
 }

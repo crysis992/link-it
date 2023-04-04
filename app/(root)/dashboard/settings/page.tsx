@@ -26,17 +26,17 @@ async function ProfileSettingsPage() {
                         <p className="min-w-[100px]">E-mail:</p>
                         <input type="text" name="password" placeholder="New E-Mail" className="border border-black" />
                     </div>
-                    <button className="mb-3 self-end">Update</button>
+                    <button className="mb-3 self-end cursor-not-allowed">Coming soon</button>
                 </section>
                 <h2>Avatar & Banner</h2>
                 <section className="flex flex-col gap-3 items-start border-b border-slate-200">
                     <p>Coming soon</p>
-                    <button className="mb-3 self-end">Update</button>
+                    <button className="mb-3 self-end cursor-not-allowed">Coming soon</button>
                 </section>
                 <h2 className="text-red-500">Danger Zone!</h2>
                 <section className="flex flex-col gap-3 items-start border-b border-slate-200">
                     <p>Delete your account, this action cannot be undone!</p>
-                    <button className="btn-red mb-3">Delete Account</button>
+                    <button className="btn-red mb-3 cursor-not-allowed">Coming soon</button>
                 </section>
             </div>
         </div>
