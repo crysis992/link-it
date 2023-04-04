@@ -58,6 +58,23 @@ function LinkShortener() {
         setUrl(data.shortId);
     });
 
+    const handleInsert = (input: string) => {
+        if (input < data && data === 'https://' || data === 'http://') {
+            return;
+        }
+        if (data.length === 1 && input.length === 1) {
+            setData(`https://${input}`);
+        }
+        else if (input.length > 1) {
+            if (input.startsWith('https://') || input.startsWith('http://')) {
+                setData(input)
+            } else {
+                setData(`https://${input}`);
+            }
+        } else {
+            setData(input)
+        }
+    }
 
     return (
         <section className="container mx-auto mt-20">
@@ -74,7 +91,7 @@ function LinkShortener() {
                     autoComplete="off"
                     placeholder="Paste an URL to shorten"
                     value={data}
-                    onChange={(e) => setData(e.target.value)}
+                    onChange={(e) => handleInsert(e.target.value)}
                 />
                 {loading ? <p>Loading...</p> :
                     <button onClick={() => { handleSubmit(data) }} className='py-3 rounded-xl px-3 hover:bg-opacity-80 transition bg-gradient-to-tr from-green-500 to-green-600 font-semibold'>Short this link</button>
