@@ -10,7 +10,7 @@ function Navigation() {
         <nav className="py-2 w-full bg-white shadow-sm shadow-slate-300 flex items-center mb-2 justify-between border-b">
             <div className="flex items-center gap-3">
                 <Image src={logo} alt='Website Logo' height={36} width={36} priority className="ml-3 max-[400px]:hidden" />
-                <Link href='/'><p className="text-2xl font-bold cursor-pointer ml-1">Link.es</p></Link>
+                <Link href='/'><p className="text-2xl font-bold cursor-pointer ml-1">{process.env.HEADER_SITE_NAME}</p></Link>
             </div>
             <div className="mr-10 flex gap-3">
                 <Suspense fallback={<div>Loading...</div>}>
