@@ -2,7 +2,7 @@ import { HTMLInputTypeAttribute } from "react";
 import clsx from "clsx"
 interface InputProps {
     id: string;
-    type: HTMLInputTypeAttribute
+    type?: HTMLInputTypeAttribute
     placeholder: string;
     value: string;
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
